@@ -1,9 +1,11 @@
+const latitude = 43.8561;
+const longitude = -79.3370;
 function initMap(){
   //map location
-  var myLoc = {lat: -25.363, lng: 131.044};
+  var myLoc = {lat: latitude, lng: longitude};
   //map options
   var options = {
-    zoom:6,
+    zoom:10,
     center: myLoc
   };
   //new map
