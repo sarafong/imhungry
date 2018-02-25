@@ -57,7 +57,7 @@ client.search(searchRequest).then(response => {
 
 var location;
 function setLongLat(firstResult){
-  const latitude = JS ON.stringify(firstResult.coordinates.latitude);
+  const latitude = JSON.stringify(firstResult.coordinates.latitude);
   const longitude = JSON.stringify(firstResult.coordinates.longitude);
   location = latitude + "\n" + longitude;
     fs.writeFile('location.txt', location, (err) => {
@@ -68,4 +68,12 @@ function setLongLat(firstResult){
     console.log('Writing to file - success!');
 });
 }
+
+var connect = require('connect');
+var serveStatic = require('serve-static');
+connect().use(serveStatic(__dirname )).listen(8080, function(){
+    console.log('Server running on 8080...');
+});
+
+
 
