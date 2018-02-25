@@ -13,21 +13,21 @@ stream = byline.createStream(stream);
 stream.on('data', function(line) {
     console.log(line);
 });*/
-
 var radius;
 var category;
 var price;
 
-var fs = require('fs');
-var array = fs.readFileSync('readMe.txt').toString().split("\n");
-for(i in array) {
-    console.log(array[i]);
-}
 
-radius=parseInt(array[0]);
-category=array[1];
-price=array[2];
+var firebase = require ('firebase');
+firebase.initializeApp({
+  databaseURL: "https://hack-the-valley-eea3a.firebaseio.com/"
+});
 
+firebase.database().ref().once("value").then(function(snapshot){
+  category = snapshot.child("Information/Categories").key;
+  price = snapshot.child("Information/Price").key;
+  radius = snapshot.child("Information/Radius").key;
+});
 
 'use strict';
 
@@ -55,18 +55,11 @@ client.search(searchRequest).then(response => {
   console.log(e);
 });
 
-var location;
 function setLongLat(firstResult){
   const latitude = JSON.stringify(firstResult.coordinates.latitude);
   const longitude = JSON.stringify(firstResult.coordinates.longitude);
-  location = latitude + "\n" + longitude;
-    fs.writeFile('location.txt', location, (err) => {
-        // throws an error, you could also catch it here
-        if (err) throw err;
-
-// success case, the file was saved
-    console.log('Writing to file - success!');
-});
+  firebase.database().ref().child('Latitude').set(latitude);
+  firebase.database().ref().child('Longitude').set(longitude);
 }
 
 var connect = require('connect');
@@ -74,6 +67,3 @@ var serveStatic = require('serve-static');
 connect().use(serveStatic(__dirname )).listen(8080, function(){
     console.log('Server running on 8080...');
 });
-
-
-
