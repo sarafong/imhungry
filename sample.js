@@ -23,12 +23,12 @@ firebase.initializeApp({
   databaseURL: "https://hack-the-valley-eea3a.firebaseio.com/"
 });
 
-firebase.database().ref().once("value").then(function(snapshot){
-  category = snapshot.child("Information/Categories").key;
-  price = snapshot.child("Information/Price").key;
-  radius = snapshot.child("Information/Radius").key;
-});
+firebase.database().ref("/Information").on('value', function(snapshot){
+  category = snapshot.val().Categories;
+  price = snapshot.val().Price;
+  radius = parseFloat(snapshot.val().Radius);
 
+});
 'use strict';
 
 const yelp = require('yelp-fusion');
@@ -37,12 +37,13 @@ const yelp = require('yelp-fusion');
 // from https://www.yelp.com/developers/v3/manage_app
 const apiKey = 'Y6WA9D0kzh65ygw0RMQOcaxFAnwZy_miJ6fQY38GjAeXkGXJYLjVA7rdzgCLs5qsvG6ZYO9zF_2honCL6iym6JZSwv-m0DyuGv7bLVV3iCwZ2mOp2L3un0pUwseRWnYx';
 
-
-const searchRequest = {
-  category: category,
-  location: 'toronto, on',
-  radius: radius
-};
+setTimeout(function(){
+  const searchRequest = {
+    category: category,
+    location: 'toronto, on',
+    price: price,
+    radius: radius
+  };
 
 const client = yelp.client(apiKey);
 
@@ -61,7 +62,7 @@ function setLongLat(firstResult){
   firebase.database().ref().child('Latitude').set(latitude);
   firebase.database().ref().child('Longitude').set(longitude);
 }
-
+}, 1000);
 var connect = require('connect');
 var serveStatic = require('serve-static');
 connect().use(serveStatic(__dirname )).listen(8080, function(){
