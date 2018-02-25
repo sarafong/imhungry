@@ -1,3 +1,4 @@
+
 //------load maps-API
 window.addEventListener('load',function(){
 
@@ -7,11 +8,9 @@ window.addEventListener('load',function(){
   document.body.appendChild(script);
 });
 
-const latitude = 43.8561;
-const longitude = -79.3370;
 function initMap(){
   //map location
-  var myLoc = {lat: latitude, lng: longitude};
+  var myLoc = {lat: 25, lng: 35};
   //map options
   var options = {
     zoom:10,
