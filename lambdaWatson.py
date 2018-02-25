@@ -30,12 +30,12 @@ def findFood(score):
         firebase.put("Information","Radius","1500")
         firebase.put("Information","Categories","icecream,dessert")
         firebase.put("Information","Price","1,2")
-        ret = "Sounds like you need some Ice Cream" #distance: close
+        ret = "Oh no, sounds like you need some Ice Cream" #distance: close
     elif score>=-0.8 and score<-0.6:
         firebase.put("Information","Radius","1500")
         firebase.put("Information","Categories","coffee,cafe")
         firebase.put("Information","Price","1,2")
-        ret = "Let's go to a coffee shop"
+        ret = "Are you feeling down? Let's go to a coffee shop"
     elif score>=-0.6 and score<0.4:
         firebase.put("Information","Radius","5000")
         firebase.put("Information","Categories","burger,hotdog,fastfood")
